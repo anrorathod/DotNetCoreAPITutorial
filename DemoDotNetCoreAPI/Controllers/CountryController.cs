@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoDotNetCoreAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CountryController : ControllerBase
     {
@@ -21,6 +21,21 @@ namespace DemoDotNetCoreAPI.Controllers
                 new Country{ Id = 2, Name = "USA" , Code = "US" } 
             };
             return countries;
+        }
+
+
+        [HttpGet("{id}")]
+        [ActionName("GetCountryById")]
+        public ActionResult<Country> GetCountryById(int id)
+        {
+            List<Country> countries = new List<Country>()
+            {
+                new Country{ Id = 1, Name = "India" , Code = "IN" },
+                new Country{ Id = 2, Name = "USA" , Code = "US" }
+            };
+
+            var country = countries.Where(c => c.Id == id).FirstOrDefault();
+            return country;
         }
     }
 }
